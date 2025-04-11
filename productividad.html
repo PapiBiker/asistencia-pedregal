@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Productividad</title>
+    <!-- Favicon clásico -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+
+    <!-- Ícono para Android (PWA, etc.) -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="/favicon-192x192.png"
+    />
+
+    <!-- Ícono grande para pantallas retina, PWA -->
+    <link rel="apple-touch-icon" sizes="512x512" href="/favicon-512x512.png" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
+    />
+    <script type="module" crossorigin src="/assets/main-DvBdTWuP.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/style-BkkFC6Yc.css">
+  <link rel="manifest" href="/manifest.webmanifest"></head>
+  <body>
+    <div id="header"></div>
+    <main class="container my-5">
+      <!-- Sección Asistencias -->
+      <section>
+        <h3>Registros de Asistencia</h3>
+
+        <div class="row g-2 mb-3">
+          <div class="col-12 col-md">
+            <input
+              class="form-control"
+              type="text"
+              id="filtroNombre"
+              placeholder="Nombre..."
+              onkeyup="filtrarTabla()"
+            />
+          </div>
+          <div class="col-12 col-md">
+            <input
+              class="form-control"
+              type="text"
+              id="filtroLabor"
+              placeholder="Labor..."
+              onkeyup="filtrarTabla()"
+            />
+          </div>
+          <div class="col-12 col-md">
+            <input
+              class="form-control"
+              type="text"
+              id="filtroLote"
+              placeholder="Lote..."
+              onkeyup="filtrarTabla()"
+            />
+          </div>
+        </div>
+
+        <div class="table-responsive rounded-3 border">
+          <table
+            id="asistenciasTable"
+            class="table table-hover table-bordered mb-0 text-nowrap"
+          >
+            <thead class="table-dark">
+              <tr>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Nombre</th>
+                <th>Labor</th>
+                <th>Lote</th>
+                <th>Avance</th>
+                <th>Productividad</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+    <div id="footer"></div>
+
+    <div id="footer"></div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      function filtrarTabla() {
+        const nombreFiltro = document
+          .getElementById("filtroNombre")
+          .value.toUpperCase();
+        const laborFiltro = document
+          .getElementById("filtroLabor")
+          .value.toUpperCase();
+        const loteFiltro = document
+          .getElementById("filtroLote")
+          .value.toUpperCase();
+
+        const tabla = document.querySelector("table");
+        const filas = tabla.getElementsByTagName("tr");
+
+        for (let i = 1; i < filas.length; i++) {
+          // Saltamos la fila de encabezado
+          const celdas = filas[i].getElementsByTagName("td");
+          const nombre = celdas[2]?.innerText.toUpperCase(); // Columna Nombre
+          const labor = celdas[3]?.innerText.toUpperCase(); // Columna Labor
+          const lote = celdas[4]?.innerText.toUpperCase(); // Columna Lote
+
+          const coincideNombre = nombre.includes(nombreFiltro);
+          const coincideLabor = labor.includes(laborFiltro);
+          const coincideLote = lote.includes(loteFiltro);
+
+          filas[i].style.display =
+            coincideNombre && coincideLabor && coincideLote ? "" : "none";
+        }
+      }
+    </script>
+  </body>
+</html>
